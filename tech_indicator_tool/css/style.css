@@ -1,0 +1,321 @@
+/* style.css — 技术指标交互分析工具 样式 */
+
+/* ────────── 全局 ────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9FA;
+  --bg-card: #FFFFFF;
+  --text-primary: #1A1A2E;
+  --text-secondary: #6B7280;
+  --text-tertiary: #9CA3AF;
+  --border: #E5E7EB;
+  --border-hover: #D1D5DB;
+  --accent: #534AB7;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 0;
+}
+
+/* ────────── 布局 ────────── */
+.app-container {
+  width: 100%;
+  padding: 10px 24px 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ────────── 标头 ────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.header h1 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header h1 .badge {
+  font-size: 11px;
+  font-weight: 400;
+  background: var(--bg-primary);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 2px 10px;
+  color: var(--text-secondary);
+}
+
+.header .price-info {
+  font-size: 13px;
+  text-align: right;
+}
+
+.header .price-info .price { font-weight: 600; font-size: 15px; }
+.header .price-info .change.up { color: #DC143C; }
+.header .price-info .change.down { color: #228B22; }
+
+/* ────────── 控制栏 ────────── */
+.controls-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 7px 14px;
+  flex-shrink: 0;
+}
+
+.controls-bar select {
+  font-size: 13px;
+  padding: 5px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-width: 160px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.controls-bar select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(83,74,183,0.12);
+}
+
+.controls-bar .date-range {
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.controls-bar .toggle-group {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+
+.controls-bar .toggle-group label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.controls-bar .toggle-group input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+/* ────────── 图表行：左侧图表 + 右侧参数面板 ────────── */
+.chart-row {
+  display: flex;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 5px;
+  background: var(--bg-card);
+}
+
+.chart-area {
+  flex: 1;
+  height: 340px;
+  min-width: 0;
+  position: relative;
+}
+
+.chart-area.chart-main { height: 460px; }
+
+.param-panel {
+  width: 178px;
+  flex-shrink: 0;
+  padding: 10px 12px;
+  background: var(--bg-secondary);
+  border-left: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+}
+
+.param-panel .param-title {
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.param-panel .param-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.param-panel label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.param-panel label span.val {
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 24px;
+  text-align: right;
+}
+
+.param-panel input[type="range"] {
+  width: 100%;
+  margin: 1px 0;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.param-panel select {
+  font-size: 11px;
+  padding: 3px 5px;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.param-panel .checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 1px;
+}
+
+.param-panel .checkbox-row input { accent-color: var(--accent); }
+
+.param-panel button {
+  font-size: 11px;
+  padding: 4px 8px;
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  cursor: pointer;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  transition: all 0.15s;
+}
+
+.param-panel button:hover {
+  background: var(--bg-secondary);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+/* ────────── 汇总卡片 ────────── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+  flex-shrink: 0;
+}
+
+.summary-card {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+}
+
+.summary-card .label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-bottom: 2px;
+}
+
+.summary-card .value {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--text-primary);
+}
+
+.summary-card .desc {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 1px;
+}
+
+/* ────────── 底部提示 ────────── */
+.footer-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  gap: 6px;
+}
+
+.footer-hint .zoom-icon {
+  display: inline-block;
+  width: 24px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  border: 0.5px solid var(--border);
+}
+
+/* ────────── 加载状态 ────────── */
+.loading-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+
+/* ────────── ECharts 容器覆盖 ────────── */
+.chart-area canvas {
+  display: block;
+}

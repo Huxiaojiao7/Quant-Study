@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.workbuddy/
+node_modules/
+.ipynb_checkpoints/
+*.egg-info/
+~$*

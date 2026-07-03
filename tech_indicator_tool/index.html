@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>技术指标交互分析工具</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+</head>
+<body>
+
+<div class="app-container" id="app">
+
+  <!-- 标头 -->
+  <header class="header">
+    <h1>
+      技术指标交互分析工具
+      <span class="badge" id="stock-badge">数据加载中...</span>
+    </h1>
+    <div class="price-info" id="price-info">
+      <span class="price" id="price-last">--</span>
+      <span class="change" id="price-change">--</span>
+    </div>
+  </header>
+
+  <!-- 控制栏 -->
+  <div class="controls-bar">
+    <select id="stock-select">
+      <option value="">加载中...</option>
+    </select>
+    <span class="date-range" id="date-range">----</span>
+    <div class="toggle-group">
+      <label><input type="checkbox" id="show-volume" checked> 显示成交量</label>
+      <label><input type="checkbox" id="crosshair" checked> 十字光标联动</label>
+    </div>
+  </div>
+
+  <!-- 主图: K线 + 布林带 -->
+  <div class="chart-row">
+    <div class="chart-area chart-main" id="chart-main"></div>
+    <div class="param-panel">
+      <div class="param-title">布林带参数</div>
+      <div class="param-row">
+        <label>中轨周期 N <span class="val" id="boll-period-val">20</span></label>
+        <input type="range" id="boll-period" min="2" max="100" value="20">
+      </div>
+      <div class="param-row">
+        <label>标准差倍数 K <span class="val" id="boll-multiplier-val">2.0</span></label>
+        <input type="range" id="boll-multiplier" min="0.5" max="5" value="2" step="0.1">
+      </div>
+      <div class="param-row">
+        <label>均线类型</label>
+        <select id="boll-ma-type"><option value="SMA">SMA</option><option value="EMA">EMA</option></select>
+      </div>
+      <button id="reset-boll">重置默认值</button>
+    </div>
+  </div>
+
+  <!-- RSI 图 -->
+  <div class="chart-row">
+    <div class="chart-area" id="chart-rsi"></div>
+    <div class="param-panel">
+      <div class="param-title">RSI 参数</div>
+      <div class="param-row">
+        <label>周期 N <span class="val" id="rsi-period-val">14</span></label>
+        <input type="range" id="rsi-period" min="2" max="100" value="14">
+      </div>
+      <div class="param-row">
+        <label>超买阈值 <span class="val" id="rsi-ob-val">70</span></label>
+        <input type="range" id="rsi-ob" min="50" max="100" value="70">
+      </div>
+      <div class="param-row">
+        <label>超卖阈值 <span class="val" id="rsi-os-val">30</span></label>
+        <input type="range" id="rsi-os" min="0" max="50" value="30">
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="rsi-multi"> 多线模式 (6/14/24)
+      </div>
+      <button id="reset-rsi">重置默认值</button>
+    </div>
+  </div>
+
+  <!-- MACD 图 -->
+  <div class="chart-row">
+    <div class="chart-area" id="chart-macd"></div>
+    <div class="param-panel">
+      <div class="param-title">MACD 参数</div>
+      <div class="param-row">
+        <label>快线周期 <span class="val" id="macd-fast-val">12</span></label>
+        <input type="range" id="macd-fast" min="2" max="100" value="12">
+      </div>
+      <div class="param-row">
+        <label>慢线周期 <span class="val" id="macd-slow-val">26</span></label>
+        <input type="range" id="macd-slow" min="3" max="200" value="26">
+      </div>
+      <div class="param-row">
+        <label>信号线周期 <span class="val" id="macd-signal-val">9</span></label>
+        <input type="range" id="macd-signal" min="2" max="50" value="9">
+      </div>
+      <button id="reset-macd">重置默认值</button>
+    </div>
+  </div>
+
+  <!-- ATR 图 -->
+  <div class="chart-row">
+    <div class="chart-area" id="chart-atr"></div>
+    <div class="param-panel">
+      <div class="param-title">ATR 参数</div>
+      <div class="param-row">
+        <label>周期 N <span class="val" id="atr-period-val">14</span></label>
+        <input type="range" id="atr-period" min="2" max="100" value="14">
+      </div>
+      <div class="param-row">
+        <label>平滑方式</label>
+        <select id="atr-smooth">
+          <option value="EMA">EMA</option>
+          <option value="SMA">SMA</option>
+          <option value="Wilder">Wilder</option>
+        </select>
+      </div>
+      <button id="reset-atr">重置默认值</button>
+    </div>
+  </div>
+
+  <!-- 底部 dataZoom 提示 -->
+  <div class="footer-hint">
+    <span class="zoom-icon"></span>
+    底部拖拽缩放/平移 — 四图同步
+  </div>
+
+  <!-- 汇总卡片 -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="label">RSI(14) 当前</div>
+      <div class="value" id="summary-rsi-val">--</div>
+      <div class="desc" id="summary-rsi-desc">--</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">MACD 信号</div>
+      <div class="value" id="summary-macd-val">--</div>
+      <div class="desc" id="summary-macd-desc">--</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">布林带位置</div>
+      <div class="value" id="summary-boll-val">--</div>
+      <div class="desc" id="summary-boll-desc">--</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">ATR(14)</div>
+      <div class="value" id="summary-atr-val">--</div>
+      <div class="desc" id="summary-atr-desc">--</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Scripts -->
+<script src="js/indicators.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/controls.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
