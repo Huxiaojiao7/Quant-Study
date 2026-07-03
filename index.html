@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quant Study - 量化学习项目</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #f0f2f5; color: #333;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 24px;
+  }
+  .card {
+    max-width: 640px; width: 100%;
+    background: #fff; border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 40px 36px;
+  }
+  h1 { font-size: 24px; color: #1a237e; margin-bottom: 8px; }
+  .sub { color: #888; font-size: 14px; margin-bottom: 24px; }
+  .task {
+    display: block; padding: 18px 20px; margin-bottom: 12px;
+    background: #f8f9ff; border-radius: 10px;
+    border-left: 4px solid #3949ab;
+    text-decoration: none; color: #333;
+    transition: background 0.2s;
+  }
+  .task:hover { background: #eef0ff; }
+  .task .title { font-size: 16px; font-weight: 700; color: #1a237e; }
+  .task .desc { font-size: 13px; color: #666; margin-top: 4px; }
+  .task .badge {
+    display: inline-block; font-size: 11px;
+    background: #3949ab; color: #fff;
+    padding: 1px 8px; border-radius: 4px; margin-top: 6px;
+  }
+  .footer {
+    text-align: center; color: #aaa; font-size: 12px;
+    margin-top: 24px;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>📊 Quant Study</h1>
+  <div class="sub">A 股量化学习项目 · 数据驱动 · 可视化分析</div>
+
+  <a class="task" href="Task1/绿的谐波_行情看板.html">
+    <div class="title">Task 1：绿的谐波 (688017.SH) 行情看板</div>
+    <div class="desc">近一年日线数据 · K线图 + 收盘价曲线 + 均线分析 + 投资建议</div>
+    <span class="badge">ECharts 可视化</span>
+  </a>
+
+  <a class="task" href="Task1/绿的谐波_数据分析流程.ipynb">
+    <div class="title">数据分析流程 Notebook</div>
+    <div class="desc">Jupyter Notebook 完整展示从数据获取到看板生成的全流程</div>
+    <span class="badge">Python</span>
+  </a>
+
+  <a class="task" href="https://github.com/Huxiaojiao7/Quant-Study">
+    <div class="title">GitHub 仓库主页 →</div>
+    <div class="desc">查看源代码、CSV 数据、脚本与文档</div>
+    <span class="badge">GitHub</span>
+  </a>
+
+  <div class="footer">
+    Powered by Tushare · ECharts · Python · WorkBuddy
+  </div>
+</div>
+</body>
+</html>
